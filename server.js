@@ -3,7 +3,8 @@
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-
+var btoa = require('btoa');
+var atob = require('atob');
 var cors = require('cors');
 
 var app = express();
