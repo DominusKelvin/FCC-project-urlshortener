@@ -41,9 +41,10 @@ urlSchema.pre('save', function(next) {
       next();
   });
 });
+var URL = mongoose.model('URL', urlSchema);
 
-mongoose.connect(process.env.MONGOLAB_URI, {
-  useMongoClient: true
+mongoose.connect("mongodb://dominus:trajectory1@ds119800.mlab.com:19800/fcc-backend-js", {
+  useNewUrlParser: true,
 });
 
 app.use(cors());
@@ -64,7 +65,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-pp.post("/api/shorturl/new", function(req, res, next) {
+app.post("/api/shorturl/new", function(req, res, next) {
   
   console.log(req.body.url);
   var urlData = req.body.url;
@@ -109,5 +110,5 @@ app.get('/api/shorturl/:hash', function(req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Node.js listening ...');
+  console.log('Node.js listening ...',port);
 });
