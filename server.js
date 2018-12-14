@@ -64,6 +64,38 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+pp.post("/api/shorturl/new", function(req, res, next) {
+  
+  console.log(req.body.url);
+  var urlData = req.body.url;
+  URL.findOne({url: urlData}, function(err, doc) {
+      if(doc) {
+          console.log('entry found in db');
+          res.json({
+              original_url: urlData,
+              short_url: btoa(doc._id),
+              status: 200,
+              statusTxt: 'OK'
+          });
+      } else {
+          console.log('entry NOT found in db, saving new');
+          var url = new URL({
+              url: urlData
+          });
+          url.save(function(err) {
+              if(err) return console.error(err);
+              res.json({
+                  original_url: urlData,
+                  short_url: btoa(url._id),
+                  status: 200,
+                  statusTxt: 'OK'
+              });
+          });
+      }
+  });
+
+});
+
 
 app.listen(port, function () {
   console.log('Node.js listening ...');
