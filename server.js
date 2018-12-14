@@ -96,6 +96,17 @@ pp.post("/api/shorturl/new", function(req, res, next) {
 
 });
 
+app.get('/api/shorturl/:hash', function(req, res) {
+  var baseid = req.params.hash;
+  var id = atob(baseid);
+  URL.findOne({ _id: id }, function(err, doc) {
+      if(doc) {
+          res.redirect(doc.url);
+      } else {
+          res.redirect('/');
+      }
+  });
+});
 
 app.listen(port, function () {
   console.log('Node.js listening ...');
