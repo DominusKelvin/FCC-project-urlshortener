@@ -14,6 +14,18 @@ var port = process.env.PORT || 3000;
 
 /** this project needs a db !! **/ 
 // mongoose.connect(process.env.MONGOLAB_URI);
+var countersSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
+  count: { type: Number, default: 0 }
+});
+
+var Counter = mongoose.model('Counter', countersSchema);
+
+var urlSchema = new mongoose.Schema({
+  _id: {type: Number},
+  url: '',
+  created_at: ''
+});
 
 app.use(cors());
 
